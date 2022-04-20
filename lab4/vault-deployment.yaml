@@ -67,7 +67,7 @@ spec:
             port: 8200
         readinessProbe:
           httpGet:
-# TODO add httpGet.path attribute without sealedcode option
+            path: 'v1/sys/health?standbyok=true&standbycode=200&uninitcode=200'
             port: 8200
       volumes:
       - name: vault-config-backend
