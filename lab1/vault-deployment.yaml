@@ -29,9 +29,24 @@ spec:
           value: 'true'
         - name: SKIP_CHOWN
           value: 'true'
-# TODO add VAULT_LOCAL_CONFIG env var here
+        - name: VAULT_LOCAL_CONFIG
+          value: |
+            {"backend":
+              {"file":
+                {"path": "/vault/file"}
+              },
+              "default_lease_ttl": "168h",
+              "max_lease_ttl": "720h" ,
+              "disable_mlock": true,
+              "listener":
+              { "tcp" :
+                { "address" : "0.0.0.0:8200",
+                "tls_disable": 1}
+              }
+            }
         volumeMounts:
-# TODO add a volume mount for file backend here
+        - name: vault-file-backend
+          mountPath: /vault/file
         livenessProbe:
           httpGet:
             path: 'v1/sys/health?standbyok=true&standbycode=200&sealedcode=200&uninitcode=200'
@@ -41,4 +56,5 @@ spec:
             path: 'v1/sys/health?standbyok=true&standbycode=200&sealedcode=200&uninitcode=200'
             port: 8200
       volumes:
-# TODO add a empty dir volume for file backend here
+      - name: vault-file-backend
+        emptyDir: {}
