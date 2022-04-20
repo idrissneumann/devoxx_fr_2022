@@ -4,10 +4,13 @@ metadata:
   name: myvault
 spec:
   rules:
-  - host: vault-<username>.apps.cluster-4zmbp.4zmbp.sandbox688.opentlc.com
+  - host: vault-user14.apps.cluster-4zmbp.4zmbp.sandbox688.opentlc.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
-          service: #TODO add the service name and port
+          service:
+            name: vault
+            port: 
+              number: 8200
